@@ -84,7 +84,7 @@ RUN /opt/microchip/mplabx/v${MPLABX_VERSION}/mplab_platform/bin/xclm -netfile 50
 #-SL-part5: ------------------- download (=curl) XC32-version and install ---------------------------
 # Download and install toolchain
 ENV TOOLCHAIN xc32
-ENV TOOLCHAIN_VERSION 4.20
+ENV TOOLCHAIN_VERSION 4.21
 RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/${TOOLCHAIN}.run \
  "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/${TOOLCHAIN}-v${TOOLCHAIN_VERSION}-full-install-linux-x64-installer.run" \
  && chmod a+x /tmp/${TOOLCHAIN}.run \

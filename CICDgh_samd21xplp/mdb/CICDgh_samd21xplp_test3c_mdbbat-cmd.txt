@@ -1,0 +1,53 @@
+#-SL: mdb.bat-cmd file for prj 
+#-SL: call from main directory where all Jenkins-files are and you see the 
+#-SL:  'CICDgh_samd21xplp\
+#-          |-Dockerfile, Jenkinsfile, LICENSE, README.md physical_setup.jpg
+#-          |-CICDgh_samd21xplp\
+#-              |-firmware\
+#-              |-mdb\
+#-SL:  (DOS: CICDgh_samd21xplp\)> mdb.bat .\CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbbat.txt
+
+device ATSAMD21J18A
+set system.disableerrormsg true
+set system.disableoutput true
+set system.yestoalldialog true
+set communication.interface swd
+hwtool EDBG 
+
+#- relative path from "Jenkins-WS: CICDgh_samd21xplp" to 'elf':
+#-   
+#-win-path with '\' as directory-separator
+#program .\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X\dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
+#-lin-path with '/' as directory-separator
+program ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
+
+break testEnd
+reset
+run
+#-in msec (don't put that command behind the cmd - mdbbat interprets it and will never stop!)
+#-> not needed, as FW contains 'check for SW0-press and jump to testEnd()'
+echo "press SW0 to stop execution without the next 30.000msec=30sec"
+wait 5000
+#halt
+
+#-print test-variables and then quit
+
+#-runs FW as is, so
+#-  a) LEDtoggle@1Hz
+#-  b) UARTTX ch1='a' and ch2='b'
+#-  ->can 'halt' and change ch2 
+#-      ='c' with 'write /p char2prntIdx 1'
+#-      ='d' with 'write /p char2prntIdx 2'
+#-  ->can stop exec by pressing SW0, which 
+#-      -) jumps into testEnd() 
+#-      -) prints "testEnd with finalLedCnt=$finalLedCnt" with value of global 'finalLedCnt' 
+#-      -) and loops there
+echo - print myCnt -
+echo - print char2prntIdx -
+echo - write /p char2prntIdx 0 #0->'b', 1->'c', 2->'d' -
+print char2prntIdx
+print finalLedCnt
+
+
+#-quit mdb.bat-run
+quit

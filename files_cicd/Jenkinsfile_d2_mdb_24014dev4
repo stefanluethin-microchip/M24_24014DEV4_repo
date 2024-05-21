@@ -164,8 +164,7 @@ pipeline {
                     script: """
 						    set +x
                             echo "###-SL: ========================================================================"
-                            echo "###-SL: START elf=exists check OR compile"
-							echo "###-SL:   stage:HWrun / step: compile_elfExistsCheck"
+                            echo "###-SL: START stage:HWrun / step: compile_elfExistsCheck"
                             echo "###-SL: ========================================================================"
 							${ELF_TEST_SCR_FULLP}
 							echo "###-SL: ========================================================================"
@@ -179,8 +178,7 @@ pipeline {
                     script: """
 						    set +x
                             echo "###-SL: ========================================================================"
-                            echo "###-SL: START elf=exists check OR compile"
-							echo "###-SL:   stage:HWrun / step: mdbbat_HW_in_loop_run"
+                            echo "###-SL: START stage:HWrun / step: mdbbat_HW_in_loop_run"
                             echo "###-SL: ========================================================================"
 							 #-chmod +x CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test3b_mdbbat-run.sh 
 							 #-CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test3b_mdbbat-run.sh

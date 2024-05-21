@@ -50,7 +50,7 @@ pipeline {
                             echo "###-SL: ========================================================================"
                             echo "###-SL:       Jenkins-Pipeline ${env.JPIPELINE}"
 							echo "###-SL:       from ${env.JOB_NAME}"
-							echo "###-SL:       START stage:build/step:environment check"
+							echo "###-SL:       START stage:build / step:environment check"
                             echo "###-SL: ========================================================================"
 							 #-SL-comment: full env with: 
 							printenv
@@ -58,7 +58,7 @@ pipeline {
 							echo "###-SL: prj_root_p = ${env.PRJ_ROOT_P}"							
                             echo "###-SL: WS = ${env.WORKSPACE}"
                             echo "###-SL: ========================================================================"
-                            echo "###-SL:       END stage:build/step:environment check"
+                            echo "###-SL:       END stage:build / step:environment check"
                             echo "###-SL: ========================================================================"
 							set -x							
                             """
@@ -68,7 +68,7 @@ pipeline {
                      script: """
 						    set +x
                             echo "###-SL: ========================================================================"
-							echo "###-SL:       START stage:build/step:cleanup"
+							echo "###-SL:       START stage:build / step:cleanup"
                             echo "###-SL: ========================================================================"
                             cd ${env.WORKSPACE}
                             rm -rf ./build
@@ -79,7 +79,7 @@ pipeline {
                             rm -rf nbproject/Package-samd21xplp.bash
                             rm -rf nbproject/private
                             echo "###-SL: ========================================================================"
-                            echo "###-SL:       END stage:build/step:cleanup"
+                            echo "###-SL:       END stage:build / step:cleanup"
                             echo "###-SL: ========================================================================"	
 							set +x
                             """
@@ -89,13 +89,13 @@ pipeline {
                      script: """
                             set +x
                             echo "###-SL: ======================================================================== "
-							echo "###-SL:       START stage:build/step:re-creating makefiles for ${PRJ_MK_STR}"
+							echo "###-SL:       START stage:build / step:re-creating makefiles for ${PRJ_MK_STR}"
                             echo "###-SL: ======================================================================== "
 							#-SL: prjMakefilesGenerator.sh reads the MPLABX-file configuration.xml and out of it creates Makefiles
                              #-/opt/microchip/mplabx/v6.20/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
 							"${PRJ_MK_GEN_CALL}" -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
 							echo "###-SL: ========================================================================"
-                            echo "###-SL:       END stage:build/step:re-creating makefiles"
+                            echo "###-SL:       END stage:build / step:re-creating makefiles"
                             echo "###-SL: ========================================================================"	
 							set +x
                             """
@@ -105,14 +105,14 @@ pipeline {
                      script: """
 							set +x
                             echo "###-SL: ========================================================================"
-							echo "###-SL:       START stage:build/step: compile=make"
+							echo "###-SL:       START stage:build / step: compile=make"
                             echo "###-SL: ========================================================================"
                             cd "${env.PRJ_WS_REL_P}"
                             echo "###-SL: current path `pwd`"
                             make clean
                             make CONF="${env.MPLABX_CFG_N}"
 							echo "###-SL: ========================================================================"
-                            echo "###-SL:       END stage:build/step:compile=make"
+                            echo "###-SL:       END stage:build / step:compile=make"
                             echo "###-SL: ========================================================================"	
 							set +x
                              """
@@ -122,14 +122,14 @@ pipeline {
                      script: """
                             set +x
                             echo "###-SL: ========================================================================"
-							echo "###-SL:       START stage:build/step: result-check"
+							echo "###-SL:       START stage:build / step: result-check"
                             echo "###-SL: ========================================================================"
 							echo "###-SL (start): result check..."
 							cd "${env.PRJ_WS_REL_P}"
 							chmod +x ${ELF_TEST_SCR}
                             ${ELF_TEST_SCR}
 							echo "###-SL: ========================================================================"
-                            echo "###-SL:       END stage:build/step:result-check"
+                            echo "###-SL:       END stage:build / step:result-check"
                             echo "###-SL: ========================================================================"	
 							set +x
                             """

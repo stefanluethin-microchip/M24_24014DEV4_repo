@@ -33,6 +33,8 @@ pipeline {
         PRJ_WS_REL_P = "./" + "${PRJ_DIR_N}" + "/firmware/" + "${PRJ_X_NAME}"
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
+		 //-prjMakefilesGenerator to read MPLABX-configuration.xml and create Makefiles
+		PRJ_MK_GEN = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
     }
@@ -76,8 +78,9 @@ pipeline {
                             echo "###-SL: re-creating makefiles for ${env.PRJ_MK_STR}"
 							#-SL: need to provide path to prjMakefilesGenerator, whereas below for make you don't need to provide
 							#-SL:  a path, as it is extracted from the configuration.xml file
-                            "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
+                            #-"${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             #-/opt/microchip/mplabx/v6.05/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
+							"${PRJ_MK_GEN}" -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             """
                  )  //-SL: end 'step: update/build Makefiles'
                  sh(

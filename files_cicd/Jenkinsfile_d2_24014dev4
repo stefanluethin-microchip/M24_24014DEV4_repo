@@ -88,9 +88,9 @@ pipeline {
                      label: 'Generate build makefiles',
                      script: """
                             set +x
-                            echo "###-SL: ========================================================================"
-							echo "###-SL:       START stage:build/step:re-creating makefiles for ${env.PRJ_MK_STR)"
-                            echo "###-SL: ========================================================================"
+                            echo "###-SL: ======================================================================== "
+							echo "###-SL:       START stage:build/step:re-creating makefiles for ${env.PRJ_MK_STR) "
+                            echo "###-SL: ======================================================================== "
 							#-SL: prjMakefilesGenerator.sh reads the MPLABX-file configuration.xml and out of it creates Makefiles
                              #-/opt/microchip/mplabx/v6.20/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
 							"${PRJ_MK_GEN_CALL}" -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}

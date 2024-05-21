@@ -35,8 +35,8 @@
 // *****************************************************************************
  //-------------------------M24_24014DEV4 (START)------------------------------//
  //----------- items to change in 24014DEV4-class -------------------------//
-#define LEDINCR   1                                 //-TODO 1: M24-24014DEV4 LEDblink @ LEDINCR*250ms (=sysTmr wraps @250ms)
-char startString[] = "\n\r START M24_2414DEV ...";  //-TODO 2: M24-24014DEV4 string printed at startup
+#define LEDINCR   1                             	    //-TODO 1: M24-24014DEV4 LEDblink @ LEDINCR*250ms (=sysTmr wraps @250ms)
+char startString[] = "\n\r START w M24_2414DEV4 ...";	//-TODO 2: M24-24014DEV4 string printed at startup
  //-------------------------M24_24014DEV4 (END)------------------------------//
 
 volatile uint32_t myCnt;

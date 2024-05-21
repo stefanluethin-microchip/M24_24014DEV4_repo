@@ -85,11 +85,9 @@ RUN /opt/microchip/mplabx/v${MPLABX_VERSION}/mplab_platform/bin/xclm -netfile 50
 # Download and install toolchain
 ENV TOOLCHAIN xc32
 ENV TOOLCHAIN_VERSION 4.30
-RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/xc32.run \
-	"https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc32-v4.30-full-install-linux-x64-installer.tar" \
+RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/xc32.run "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc32-v4.30-full-install-linux-x64-installer.tar" \
  && chmod a+x /tmp/xc32.run \
- && /tmp/xc32.run --mode unattended --unattendedmodeui none \
-    --netservername localhost --LicenseType NetworkMode \
+ && /tmp/xc32.run --mode unattended --unattendedmodeui none --netservername localhost --LicenseType NetworkMode \
  && rm /tmp/xc32.run
 ENV PATH /opt/microchip/xc32/v4.30/bin:$PATH
 

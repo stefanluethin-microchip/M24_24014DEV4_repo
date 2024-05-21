@@ -84,8 +84,7 @@ RUN /opt/microchip/mplabx/v${MPLABX_VERSION}/mplab_platform/bin/xclm -netfile 50
 #-SL-part5: ------------------- download (=curl) XC32-version and install ---------------------------
 # Download and install toolchain
 ENV TOOLCHAIN xc32
-ENV TOOLCHAIN_VERSION 4.21
-#-SL: Download and install XC32-v4.21
+ENV TOOLCHAIN_VERSION 4.35
 RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/${TOOLCHAIN}.run \
     "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/${TOOLCHAIN}-v${TOOLCHAIN_VERSION}-full-install-linux-x64-installer.run" \
  && chmod a+x /tmp/${TOOLCHAIN}.run \
@@ -105,11 +104,12 @@ ENV PATH /opt/microchip/${TOOLCHAIN}/v${TOOLCHAIN_VERSION}/bin:$PATH
 #-SL: -> so basically after downloading+installing all DFPs with MPLABX, they're removed again to
 #-SL:    save space and then only the one needed is re-download and installed or basically simply unzipped
 # DFPs needed for samd21xplp configuration
-# Download and install Microchip.SAMD21_DFP.3.6.133
+# Download and install Microchip.SAMD21_DFP.3.6.144
+ENV DFP_V 3.6.144
 RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
-         "https://packs.download.microchip.com/Microchip.SAMD21_DFP.3.6.144.atpack" \
- && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.144 \
- && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.144 \
+		 "https://packs.download.microchip.com/Microchip.SAMD21_DFP.${DFP_V}.atpack" \
+ && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/${DFP_V} \
+ && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/${DFP_V} \
  && rm /tmp/tmp-pack.atpack
 
 
@@ -119,10 +119,11 @@ RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
 #-SL-part7: ------------------- download CMSIS -------------------------------
 #-SL: like for DFPs above only the needed CMSIS is downloaded again, after removing all after IDE-install-cleanup
 # Download and install ARM.CMSIS.5.8.0
+ENV CMSIS_V 5.8.0
 RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
-         "https://packs.download.microchip.com/ARM.CMSIS.5.8.0.atpack" \
- && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
- && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
+         "https://packs.download.microchip.com/ARM.CMSIS.${CMSIS_V}.atpack" \
+ && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/${CMSIS_V} \
+ && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/${CMSIS_V} \
  && rm /tmp/tmp-pack.atpack
 
 

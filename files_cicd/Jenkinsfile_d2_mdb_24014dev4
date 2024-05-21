@@ -37,6 +37,8 @@ pipeline {
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
 		ELF_TEST_SCR_FULLP="${env.PRJ_WS_REL_P}" + "/" + "result_check.sh"
+		 //-mdb call
+		MDB_CALL = "CICDgh_samd21xplp/" + "mdb/" + "CICDgh_samd21xplp_test3b_mdbbat-run.sh"
     }
     agent any
     
@@ -180,8 +182,10 @@ pipeline {
                             echo "###-SL: START elf=exists check OR compile"
 							echo "###-SL:   stage:HWrun / step: mdbbat_HW_in_loop_run"
                             echo "###-SL: ========================================================================"
-							chmod +x CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.sh 
-							CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.sh
+							 #-chmod +x CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test3b_mdbbat-run.sh 
+							 #-CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test3b_mdbbat-run.sh
+							chmod +x ${MDB_CALL}
+							${MDB_CALL}
 							echo "###-SL: ========================================================================"
                             echo "###-SL:       END stage:HWrun / step: mdbbat_HW_in_loop_run"
                             echo "###-SL: ========================================================================"	

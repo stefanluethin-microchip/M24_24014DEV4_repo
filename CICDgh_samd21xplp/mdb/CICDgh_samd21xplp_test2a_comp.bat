@@ -60,6 +60,7 @@
 @ECHO _
 @ECHO ######(%scrN%): compiling ...
 @CALL WHERE %XC32_CALL%
+@CALL WHERE make
 @CALL LS -la .\CICDgit_samd21xplp.X\
 @CALL CD .\CICDgit_samd21xplp.X  &&  make
 @CALL LS -la .\CICDgit_samd21xplp.X\dist\samd21xplp\production

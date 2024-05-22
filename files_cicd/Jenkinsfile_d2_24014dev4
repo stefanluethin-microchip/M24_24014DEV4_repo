@@ -40,7 +40,8 @@ pipeline {
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
 		 //-SL: extend searchpath with above set tools
-        PATH = "${XC32_BIN_PATH}:${MPLABX_BIN_PATH}:${env.PATH}"
+        //PATH = "${XC32_BIN_PATH}:${MPLABX_BIN_PATH}:${env.PATH}"
+		PATH = "/opt/microchip/xc32/v4.40/bin:/opt/microchip/mplabx/v6.20/mplab_platform/bin:${env.PATH}"
     }
     agent any
     

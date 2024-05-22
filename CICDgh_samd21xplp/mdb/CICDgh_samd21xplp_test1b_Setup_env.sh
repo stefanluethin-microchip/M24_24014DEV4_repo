@@ -12,7 +12,7 @@
 #-        around the '=' when defining env-variables !!!
 export MPLABX_V=v6.20
 export JAVA_VERS=zulu8.64.0.19-ca-fx-jre8.0.345-linux_x64
-export XC32_V=v4.35
+export XC32_V=v4.40
 export MCHP_ROOT_HOME=/opt/microchip
 export MPLABX_HOME=${MCHP_ROOT_HOME}/mplabx/${MPLABX_V}
 export XC32_HOME=${MCHP_ROOT_HOME}/xc32/${XC32_V}

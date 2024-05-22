@@ -11,7 +11,7 @@
 @REM        around the '=' when defining env-variables !!!
 @SET MPLABX_V=v6.20
 @SET JAVA_VERS=zulu8.64.0.19-ca-fx-jre8.0.345-win_x64
-@SET XC32_V=v4.35
+@SET XC32_V=v4.40
 @SET MPLABX_HOME=C:\Program Files\Microchip\MPLABX\%MPLABX_V%
 @SET GNU_HOME=%MPLABX_HOME%\gnuBins\GnuWin32
 @SET XC32_HOME=C:\Program Files\Microchip\xc32\%XC32_V%
@@ -38,7 +38,7 @@
 
 @REM extend OS-search
 @ECHO    ##: extending OS-searchpath
-@SET PATH=%MPLABX_HOME%\mplab_platform\bin;%GNU_HOME%\bin;%XC32_HOME%\bin;%BASEPATH%
+@SET PATH=%XC32_HOME%\bin;%MPLABX_HOME%\mplab_platform\bin;%GNU_HOME%\bin;%BASEPATH%
 
 @ECHO %scrN%: END
 

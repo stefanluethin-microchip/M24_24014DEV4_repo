@@ -57,11 +57,16 @@ pipeline {
 							echo "###-SL:       from ${env.JOB_NAME}"
 							echo "###-SL:       START stage:build / step:environment check"
                             echo "###-SL: ========================================================================"
-							 #-SL-comment: full env with: 
-							printenv
+							 #-SL-comment: full env (only for debugging)
+							#-printenv
+							echo "###-SL: "
                             echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 							echo "###-SL: prj_root_p = ${env.PRJ_ROOT_P}"							
                             echo "###-SL: WS = ${env.WORKSPACE}"
+							echo "###-SL: PATH = ${env.PATH}"
+							which make
+							which xc32-gcc
+							which prjMakefilesGenerator.sh
                             echo "###-SL: ========================================================================"
                             echo "###-SL:       END stage:build / step:environment check"
                             echo "###-SL: ========================================================================"

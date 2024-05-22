@@ -55,4 +55,4 @@ echo - SW0=press == (write /r 0x41004418 0x00008000) but not working properly-
 halt
 
 #-quit mdb.bat-run
-#quit
+quit

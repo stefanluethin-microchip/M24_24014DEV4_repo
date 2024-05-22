@@ -48,9 +48,9 @@
 @REM  ###-------create/update Makefiles
 @ECHO _
 @ECHO ######(%scrN%): Creating makefiles
+@CALL WHERE prjMakefilesGenerator.bat
 @CALL PUSHD .
 @CALL CD .\CICDgh_samd21xplp\firmware
-@CALL WHERE prjMakefilesGenerator.bat
 @CALL LS -F .
 @CALL LS -la .\CICDgit_samd21xplp.X\nbproject
 @CALL prjMakefilesGenerator.bat .\CICDgit_samd21xplp.X
@@ -59,6 +59,7 @@
 @REM  ###-------compile using 'make'...
 @ECHO _
 @ECHO ######(%scrN%): compiling ...
+@CALL WHERE %XC32_CALL%
 @CALL LS -la .\CICDgit_samd21xplp.X\
 @CALL CD .\CICDgit_samd21xplp.X  &&  make
 @CALL LS -la .\CICDgit_samd21xplp.X\dist\samd21xplp\production

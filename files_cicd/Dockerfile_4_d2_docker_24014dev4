@@ -90,8 +90,8 @@ ENV TOOLCHAIN_VERSION 4.40
 RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/${TOOLCHAIN}.run \
     "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/${TOOLCHAIN}-v${TOOLCHAIN_VERSION}-full-install-linux-x64-installer.run" \
  && chmod a+x /tmp/${TOOLCHAIN}.run \
- && /tmp/${TOOLCHAIN}.run --mode unattended --unattendedmodeui none --netservername localhost --LicenseType NetworkMode
- #-skip for debugging:  \ && rm /tmp/${TOOLCHAIN}.run
+ && /tmp/${TOOLCHAIN}.run --mode unattended --unattendedmodeui none --netservername localhost --LicenseType NetworkMode \
+ && rm /tmp/${TOOLCHAIN}.run
 
 ENV PATH /opt/microchip/${TOOLCHAIN}/v${TOOLCHAIN_VERSION}/bin:$PATH
 

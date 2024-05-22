@@ -48,6 +48,11 @@ echo - write /p char2prntIdx 0 #0->'b', 1->'c', 2->'d' -
 print char2prntIdx
 print finalLedCnt
 
+#-halt doesn't stop but execution resumes after quit below
+#- SW0=press == write /r 0x41004418 0x00008000
+#-  but doesn't work properly -> investigating
+echo - SW0=press == (write /r 0x41004418 0x00008000) but not working properly-
+halt
 
 #-quit mdb.bat-run
-quit
+#quit

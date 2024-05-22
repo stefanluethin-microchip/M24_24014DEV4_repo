@@ -8,7 +8,6 @@
 @echo currently here1: %cd%
 
 @REM @echo #########: delete mplab-trace files from start-directory
-@CALL RM defmplabxtrace*
 @CALL PUSHD .
 @CALL CD .\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X
 @REM @echo currently here2: %cd%

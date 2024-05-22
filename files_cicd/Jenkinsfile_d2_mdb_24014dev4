@@ -17,9 +17,9 @@ pipeline {
          //-SL: /opt/microchip/mplabx/v6.20/mplab_platform/bin/xclm
         XCLM_EXE = "xclm"
         XCLM_EXE_2_USE   = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${XCLM_EXE}"
-         //-SL: /opt/microchip/xc32/v4.35/bin/xc32-gcc
+         //-SL: /opt/microchip/xc32/v4.40/bin/xc32-gcc
         XC32_ROOT = "/opt/microchip/xc32"
-        XC32_V_2_USE = "v4.35"
+        XC32_V_2_USE = "v4.40"
         XC32_GCC_EXE = "xc32-gcc"
         XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>

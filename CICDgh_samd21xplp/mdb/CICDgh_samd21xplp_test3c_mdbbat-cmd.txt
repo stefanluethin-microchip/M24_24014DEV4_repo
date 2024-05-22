@@ -26,8 +26,8 @@ reset
 run
 #-in msec (don't put that command behind the cmd - mdbbat interprets it and will never stop!)
 #-> not needed, as FW contains 'check for SW0-press and jump to testEnd()'
-echo "press SW0 to stop execution without the next 30.000msec=30sec"
-wait 5000
+echo "press SW0 to stop execution"
+wait 1000
 #halt
 
 #-print test-variables and then quit

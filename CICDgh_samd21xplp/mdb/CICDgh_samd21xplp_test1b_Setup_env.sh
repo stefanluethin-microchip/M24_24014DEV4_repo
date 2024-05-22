@@ -46,8 +46,10 @@ echo   "###${scrN}: extending OS-searchpath"
 #echo "SL1: $PATH"
 export PATH="${MPLABX_HOME}/mplab_platform/bin:${XC32_HOME}/bin:${BASEPATH}"
 #echo "SL2: $PATH"
+which prjMakefilesGenerator.sh
 which mdb.sh
 which xc32-gcc
+which make
 
 echo   "###${scrN}: end"
 echo   ""

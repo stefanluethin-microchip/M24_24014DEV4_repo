@@ -21,7 +21,7 @@ pipeline {
         XCLM_EXE_2_USE   = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${XCLM_EXE}"
          //-SL: /opt/microchip/xc32/v4.40/bin/xc32-gcc
         XC32_ROOT = "/opt/microchip/xc32"
-        XC32_V_2_USE = "v4.40"
+        XC32_V_2_USE = "v4.21"
         XC32_GCC_EXE = "xc32-gcc"
         XC32_BIN_PATH = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin"
 		XC32_GCC_2_USE = "${XC32_BIN_PATH}" + "/" + "${XC32_GCC_EXE}"

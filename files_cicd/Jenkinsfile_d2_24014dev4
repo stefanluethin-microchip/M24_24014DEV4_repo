@@ -52,7 +52,7 @@ pipeline {
                     label: 'environment check',
                     script: """
 						    set +x
-                            echo "###-SL: ========================================================================"
+                            echo "###-SL: ========================================================================
                             echo "###-SL:       Jenkins-Pipeline ${env.JPIPELINE}"
 							echo "###-SL:       from ${env.JOB_NAME}"
 							echo "###-SL:       START stage:build / step:environment check"

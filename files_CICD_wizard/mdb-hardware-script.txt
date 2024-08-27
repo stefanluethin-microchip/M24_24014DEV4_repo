@@ -7,12 +7,12 @@ set system.yestoalldialog true
 # Set tool and device
 device ATSAMD21J18A
 # Add IP of tool so it can be detected
-addip 169.254.062.125
+addip 010.162.178.023
 # (Optional) List tools to verify that tool was detected
 hwtool
 sleep 3000
 # Connect to network configured tool
-hwtool ICD5 <ipa>169.254.062.125
+hwtool ICD5 <ipa>010.162.178.023
 
 # Generate coverage data using MPLAB Code Coverage
 # Requires that the project is built with the -mcodecov option and MPLAB Code Coverage license

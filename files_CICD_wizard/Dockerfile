@@ -36,7 +36,7 @@ ENV XCLM_PATH /opt/microchip/mplabx/v${MPLABX_VERSION}/mplab_platform/bin/xclm
 RUN /opt/microchip/mplabx/v${MPLABX_VERSION}/mplab_platform/bin/xclm -netfile 5053 'licenses.microchip.com'; exit 0
 
 ENV TOOLCHAIN xc32
-ENV TOOLCHAIN_VERSION 4.35
+ENV TOOLCHAIN_VERSION 4.40
 
 # Download and install toolchain
 RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/${TOOLCHAIN}.run \
@@ -52,18 +52,18 @@ RUN /opt/microchip/${TOOLCHAIN}/v${TOOLCHAIN_VERSION}/bin/xclm -netfile 5053 'li
 
 # DFPs needed for samd21xplp configuration
 
-# Download and install ARM.CMSIS.5.8.0
-RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
-         "https://packs.download.microchip.com/ARM.CMSIS.5.8.0.atpack" \
- && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
- && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
- && rm /tmp/tmp-pack.atpack
-
 # Download and install Microchip.SAMD21_DFP.3.6.144
 RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
          "https://packs.download.microchip.com/Microchip.SAMD21_DFP.3.6.144.atpack" \
  && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.144 \
  && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.144 \
+ && rm /tmp/tmp-pack.atpack
+
+# Download and install ARM.CMSIS.5.8.0
+RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
+         "https://packs.download.microchip.com/ARM.CMSIS.5.8.0.atpack" \
+ && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
+ && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/CMSIS/5.8.0 \
  && rm /tmp/tmp-pack.atpack
 ENV BUILD_CONFIGURATION samd21xplp
 

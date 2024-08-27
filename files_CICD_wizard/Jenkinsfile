@@ -12,6 +12,8 @@ pipeline {
         SIMULATE_COVERAGE_XML = 'simulator-coverage.xml'
         SIMULATE_RESULT_JUNIT = 'simulate-junit.xml'
         HARDWARE_TEST_BUILD_CONFIGURATION = 'samd21xplp'
+        HARDWARE_TEST_RESULT_JUNIT = 'hw-test-junit.xml'
+        HARDWARE_TEST_SERIAL_OUTPUT_FILE = 'hardware_test_serial_output.txt'
         HARDWARE_TEST_COVERAGE_DIR = 'hardware_test_coverage'
     }
 
@@ -188,7 +190,7 @@ pipeline {
                 }
             }
             environment {
-                HARDWARE_TEST_TOOL_IP = '169.254.62.125'
+                HARDWARE_TEST_TOOL_IP = '10.162.178.23'
                 HARDWARE_TEST_TOOL_SERIAL_PORT = '5050'
                 HARDWARE_TEST_MDB_SCRIPT_FILE = 'mdb-hardware-script.txt'
                 HARDWARE_TEST_BINARY_FILE = './dist/build.elf'
@@ -215,10 +217,40 @@ pipeline {
                             """
                 )
                 sh(
+                    label: 'Start capturing serial output',
+                    script: """
+                            curl ${env.SUPPORT_SCRIPT_REPO}/socket2file.js -o socket2file.js
+                            rm -rf ${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE}
+                            node socket2file.js ${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE} \
+                            ${env.HARDWARE_TEST_TOOL_IP} ${env.HARDWARE_TEST_TOOL_SERIAL_PORT} &
+                            """
+                )
+                sh(
                     label: 'Run MDB script on hardware',
                     script: """
                             mdb.sh ${env.HARDWARE_TEST_MDB_SCRIPT_FILE}
                             rm -rf ${env.HARDWARE_TEST_BINARY_FILE}
+                            """
+                )
+                sh(
+                    label: 'End capturing serial output',
+                    script: """
+                            pkill -f "node socket2file.js"
+                            """
+                )
+                sh(
+                    label: 'Convert serial output to junit test result (xml)',
+                    script: """
+                            if [ -f "${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE}" ]; then
+                                echo "Serial communication captured during hardware test (raw):"
+                                cat ${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE}
+
+                                curl ${env.SUPPORT_SCRIPT_REPO}/unity2junit.js -o unity2junit.js
+                                rm -rf ${env.HARDWARE_TEST_RESULT_JUNIT}
+                                node unity2junit.js ${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE} ${env.HARDWARE_TEST_RESULT_JUNIT}
+                            else
+                                echo "Warning: The hardware test did not generate any serial output file"
+                            fi
                             """
                 )
 
@@ -250,6 +282,14 @@ pipeline {
                             doxygen Doxyfile
                             """
                 )
+                dir("latex") {
+                    sh(
+                        label: 'Pdf',
+                        script: """
+                                make pdf
+                                """
+                    )
+                }
 
                 // Store documentation artefacts for later
                 stash name: 'doxygen',
@@ -275,6 +315,17 @@ pipeline {
                         overwrite: true,
                         zipFile: 'doc-html.zip'
                 }
+                dir('latex') {
+                    zip archive: true,
+                        glob: '**/*',
+                        exclude: '*.pdf',
+                        overwrite: true,
+                        zipFile: 'doc-latex.zip'
+                    zip archive: true,
+                        glob: '**/*.pdf',
+                        overwrite: true,
+                        zipFile: 'doc-pdf.zip'
+                }
                 // Retrieve simulate artefacts
                 unstash 'simulate'
                 // Publish junit test results
@@ -293,6 +344,11 @@ pipeline {
                                 sourceFileResolver: sourceFiles('NEVER_STORE')
                 // Retrieve hardware test artefacts
                 unstash 'hardware_test'
+                // Publish junit test results
+                junit allowEmptyResults: true,
+                      testResults: "${env.HARDWARE_TEST_RESULT_JUNIT}"
+                // Publish serial output
+                archiveArtifacts artifacts: "${env.HARDWARE_TEST_SERIAL_OUTPUT_FILE}"
                 // Publish a zip file with coverage in html
                 zip archive: true,
                     glob: "${env.HARDWARE_TEST_COVERAGE_DIR}/**/*",

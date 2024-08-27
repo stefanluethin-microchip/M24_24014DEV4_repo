@@ -14,15 +14,17 @@ pipeline {
         MPLABX_V_2_USE = "v6.20"
         MPLABX_EXE = "mplab_ide"
          //-SL: /opt/microchip/mplabx/v6.20/mplab_platform/bin/mplab_ide
-        MPLABX_EXE_2_USE = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${MPLABX_EXE}"
+        MPLABX_BIN_PATH = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin"
+		MPLABX_EXE_2_USE = "${MPLABX_BIN_PATH}" + "/" + "${MPLABX_EXE}"
          //-SL: /opt/microchip/mplabx/v6.20/mplab_platform/bin/xclm
         XCLM_EXE = "xclm"
         XCLM_EXE_2_USE   = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${XCLM_EXE}"
-         //-SL: /opt/microchip/xc32/v4.35/bin/xc32-gcc
+         //-SL: /opt/microchip/xc32/v4.40/bin/xc32-gcc
         XC32_ROOT = "/opt/microchip/xc32"
-        XC32_V_2_USE = "v4.35"
+        XC32_V_2_USE = "v4.40"
         XC32_GCC_EXE = "xc32-gcc"
-        XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
+        XC32_BIN_PATH = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin"
+		XC32_GCC_2_USE = "${XC32_BIN_PATH}" + "/" + "${XC32_GCC_EXE}"
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
          //-SL:  eg ${env.WORKSPACE} points to '/var/lib/jenkins/nodes/DEM-LT-M16422u_localJenkinsAgent/workspace/J_test3/'
@@ -37,6 +39,9 @@ pipeline {
 		PRJ_MK_GEN_CALL = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "prjMakefilesGenerator.sh"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
+		 //-SL: extend searchpath with above set tools
+        //PATH = "${XC32_BIN_PATH}:${MPLABX_BIN_PATH}:${env.PATH}"
+		PATH = "/opt/microchip/xc32/v4.40/bin:/opt/microchip/mplabx/v6.20/mplab_platform/bin:${env.PATH}"
     }
     agent any
     
@@ -52,11 +57,16 @@ pipeline {
 							echo "###-SL:       from ${env.JOB_NAME}"
 							echo "###-SL:       START stage:build / step:environment check"
                             echo "###-SL: ========================================================================"
-							 #-SL-comment: full env with: 
-							printenv
+							 #-SL-comment: full env (only for debugging)
+							#-printenv
+							echo "###-SL: "
                             echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 							echo "###-SL: prj_root_p = ${env.PRJ_ROOT_P}"							
                             echo "###-SL: WS = ${env.WORKSPACE}"
+							echo "###-SL: PATH = ${env.PATH}"
+							which make
+							which xc32-gcc
+							which prjMakefilesGenerator.sh
                             echo "###-SL: ========================================================================"
                             echo "###-SL:       END stage:build / step:environment check"
                             echo "###-SL: ========================================================================"
@@ -92,7 +102,8 @@ pipeline {
 							echo "###-SL:       START stage:build / step:re-creating makefiles for ${PRJ_MK_STR}"
                             echo "###-SL: ======================================================================== "
 							#-SL: prjMakefilesGenerator.sh reads the MPLABX-file configuration.xml and out of it creates Makefiles
-                             #-/opt/microchip/mplabx/v6.20/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
+                             #-/opt/microchip/mplabx/v6.20/mplab_platform/bin/prjMakefilesGenerator.sh -v -f \
+							 #-   ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
 							"${PRJ_MK_GEN_CALL}" -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
 							echo "###-SL: ========================================================================"
                             echo "###-SL:       END stage:build / step:re-creating makefiles"

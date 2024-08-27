@@ -26,8 +26,8 @@ reset
 run
 #-in msec (don't put that command behind the cmd - mdbbat interprets it and will never stop!)
 #-> not needed, as FW contains 'check for SW0-press and jump to testEnd()'
-echo "press SW0 to stop execution without the next 30.000msec=30sec"
-wait 5000
+echo "press SW0 to stop execution"
+wait 1000
 #halt
 
 #-print test-variables and then quit
@@ -48,6 +48,11 @@ echo - write /p char2prntIdx 0 #0->'b', 1->'c', 2->'d' -
 print char2prntIdx
 print finalLedCnt
 
+#-halt doesn't stop but execution resumes after quit below
+#- SW0=press == write /r 0x41004418 0x00008000
+#-  but doesn't work properly -> investigating
+echo - SW0=press == (write /r 0x41004418 0x00008000) but not working properly-
+halt
 
 #-quit mdb.bat-run
 quit

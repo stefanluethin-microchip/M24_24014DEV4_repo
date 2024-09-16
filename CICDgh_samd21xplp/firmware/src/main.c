@@ -68,7 +68,7 @@ int main ( void )
     SYS_Initialize ( NULL );
 
     myCnt=0;
-	syntax-error //-SL: intentionally added syntax-error
+	//syntax-error //-SL: intentionally added syntax-error
     finalLedCnt=0;
     sysTickTmrExFlag=false; //-SL: SysTickWrap-event flag
     m24_LedFreqIncrCnt=0;    

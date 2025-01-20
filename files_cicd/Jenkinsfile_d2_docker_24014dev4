@@ -45,8 +45,9 @@ pipeline {
         stage('Build') {
 			agent {
 				dockerfile  {
-					label 'DEM-LT-M16422u_localLnxPC'
-					filename 'files_cicd/Dockerfile_4_d2_docker_24014dev4'
+					dir 'files_cicd'
+					filename 'Dockerfile_4_d2_docker_24014dev4'
+					label 'DEM-LT-M16422u_jAgent1'
 					registryUrl "https://hub.docker.com/"
 				}
 			} //- run 'build' stage in DockerContainer
